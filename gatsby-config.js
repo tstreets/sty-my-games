@@ -12,4 +12,5 @@ module.exports = {
         },
         // 'gatsby-plugin-firebase-v9.0',
     ],
+    pathPrefix: '/sty-my-games',
 };
