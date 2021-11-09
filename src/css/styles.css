@@ -1,0 +1,156 @@
+/* Dark */
+
+.text-dark {
+    color: #d64b18 !important;
+}
+
+.text-dark-side {
+    color: #f2784b !important;
+}
+
+.bg-dark {
+    background-color: #d64b18 !important;
+}
+
+.bg-dark-side {
+    background-color: #f2784b !important;
+}
+
+/* Light */
+
+.text-light {
+    color: #fab69d !important;
+}
+
+.text-light-side {
+    color: #ffe5db !important;
+}
+
+.bg-light {
+    background-color: #fab69d !important;
+}
+
+.bg-light-side {
+    background-color: #ffe5db !important;
+}
+
+/* Accent */
+
+.text-accent {
+    color: #2699fb !important;
+}
+
+.text-accent-side {
+    color: #bce0fd !important;
+}
+
+.bg-accent {
+    background-color: #2699fb !important;
+}
+
+.bg-accent-side {
+    background-color: #bce0fd !important;
+}
+
+/* Off White */
+
+.text-white {
+    color: #f1f9ff !important;
+}
+
+.bg-white {
+    background-color: #f1f9ff !important;
+}
+
+/* Overall site design */
+
+.fullsite {
+    padding-top: 24px;
+    height: 100vh;
+    display: flex !important;
+    flex-direction: column;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+.mb-auto {
+    margin-bottom: auto;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.mr-auto {
+    margin-right: auto;
+}
+
+.page-header {
+    color: #d64b18 !important;
+    border: 1px solid #d64b18 !important;
+    text-align: center;
+    padding: 4px !important;
+    min-height: auto !important;
+}
+
+/* Navbar link */
+
+.navbar-link {
+    text-decoration: none;
+    display: block;
+}
+
+@media only screen and (max-width: 425px) {
+    .navbar-link span {
+        display: none;
+    }
+
+    .navbar-link {
+        padding-right: 20px;
+        padding-top: 8px;
+    }
+}
+
+/* Explore page */
+
+.game-card-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    height: calc(100vh - 60px);
+}
+
+.game-card {
+    width: 300px;
+    text-decoration: none;
+    display: block;
+    padding: 16px;
+    background-color: #ffe5db;
+    border-radius: 12px;
+    margin: 12px 24px 12px 12px;
+}
+
+/* @media only screen and (max-width: 800px) {
+    .game-card-list {
+        width: 300px;
+    }
+} */
+
+.game-card h2 {
+    color: #d64b18;
+    margin-bottom: 0;
+}
+
+.game-card h3,
+.game-card p {
+    margin-top: 0;
+    color: #f2784b;
+}
+
+.game-card p {
+    margin: 0;
+}

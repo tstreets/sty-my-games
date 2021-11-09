@@ -9,7 +9,7 @@ import {
 
 const db = getFirestore(app);
 
-export async function getGames() {
+export async function getGames(callback) {
     try {
         const gamesRef = await getDocs(
             collection(doc(db, 'apps', 'my-games'), 'games')
@@ -23,11 +23,11 @@ export async function getGames() {
                     ...gameDoc.data(),
                 });
             });
-        }
-        return allGames;
+        } else allGames.push({});
+        callback(allGames);
     } catch (e) {
         console.warn(`Failed to get games: ${e}`);
-        return [];
+        callback([{}]);
     }
 }
 

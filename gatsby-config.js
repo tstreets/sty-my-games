@@ -10,7 +10,6 @@ module.exports = {
                 credentials: require('./firebase-cred.js'),
             },
         },
-        // 'gatsby-plugin-firebase-v9.0',
     ],
-    pathPrefix: '/sty-my-games',
+    pathPrefix: '/sty-my-games/public',
 };

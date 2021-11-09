@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksty_my_games=self.webpackChunksty_my_games||[]).push([[883],{9616:function(e,t,n){n.r(t);var u=n(7294);t.default=function(){return u.createElement(u.Fragment,null,u.createElement("h1",null,"Not Found"))}}}]);
-//# sourceMappingURL=component---src-pages-404-js-95c4c46b5bc8c795b31c.js.map

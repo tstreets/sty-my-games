@@ -26,7 +26,9 @@ const AddGameForm = () => {
 
     return (
         <React.Fragment>
-            <Header>Add New Game</Header>
+            <Header className='page-header' as='h1'>
+                Add New Game
+            </Header>
             <Form>
                 <FormField
                     control={Input}
