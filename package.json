@@ -1,22 +1,27 @@
 {
-  "name": "copy-project",
-  "version": "1.0.0",
-  "private": true,
-  "description": "Copy Project",
-  "author": "Ty Streets",
-  "keywords": [
-    "gatsby"
-  ],
-  "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean"
-  },
-  "dependencies": {
-    "gatsby": "^4.1.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
-  }
+    "name": "sty-my-games",
+    "version": "1.0.0",
+    "private": true,
+    "description": "My Games Project",
+    "author": "Ty Streets",
+    "keywords": [
+        "gatsby"
+    ],
+    "scripts": {
+        "develop": "gatsby develop",
+        "start": "gatsby develop",
+        "build": "gatsby build",
+        "serve": "gatsby serve",
+        "clean": "gatsby clean"
+    },
+    "dependencies": {
+        "firebase": "^9.3.0",
+        "gatsby": "^4.1.0",
+        "gatsby-plugin-firebase-v9.0": "^1.0.2",
+        "jspdf": "^2.4.0",
+        "react": "^17.0.1",
+        "react-dom": "^17.0.1",
+        "semantic-ui-css": "^2.4.1",
+        "semantic-ui-react": "^2.0.4"
+    }
 }
