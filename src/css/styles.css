@@ -118,10 +118,10 @@
 .game-card-group {
     display: flex;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     overflow-y: scroll;
-    height: calc(100vh - 60px);
+    height: calc(100vh * 0.75);
 }
 
 .game-card {
