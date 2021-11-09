@@ -5,7 +5,13 @@ import FormField from '../components/FormField';
 import { addGame } from '../functions/db';
 
 const AddGameForm = () => {
-    const [newGame, setNewGame] = React.useState({});
+    const [newGame, setNewGame] = React.useState({
+        name: '',
+        age: 2,
+        minPlayers: 1,
+        maxPlayers: 2,
+        company: '',
+    });
 
     function addNewGame() {
         addGame(newGame);
@@ -25,6 +31,7 @@ const AddGameForm = () => {
                     name='name'
                     label='Name:'
                     onChange={changeNewGame}
+                    value={newGame.name}
                 />
                 <Form.Group widths='equal'>
                     <FormField
@@ -35,18 +42,21 @@ const AddGameForm = () => {
                         min='2'
                         max='19'
                         onChange={changeNewGame}
+                        value={newGame.age}
                     />
                     <FormField
                         control={Input}
                         name='minPlayers'
                         label='Min. Players:'
                         onChange={changeNewGame}
+                        value={newGame.minPlayers}
                     />
                     <FormField
                         control={Input}
                         name='maxPlayers'
                         label='Max. Players:'
                         onChange={changeNewGame}
+                        value={newGame.maxPlayers}
                     />
                 </Form.Group>
                 <FormField
@@ -54,6 +64,7 @@ const AddGameForm = () => {
                     name='company'
                     label='Company:'
                     onChange={changeNewGame}
+                    value={newGame.company}
                 />
                 <Form.Field>
                     <Button
