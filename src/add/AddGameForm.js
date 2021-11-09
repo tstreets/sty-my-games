@@ -5,17 +5,19 @@ import FormField from '../components/FormField';
 import { addGame } from '../functions/db';
 
 const AddGameForm = () => {
-    const [newGame, setNewGame] = React.useState({
+    const initialNewGame = {
         name: '',
         age: 2,
         minPlayers: 1,
         maxPlayers: 2,
         company: '',
-    });
+    };
+
+    const [newGame, setNewGame] = React.useState(initialNewGame);
 
     function addNewGame() {
         addGame(newGame);
-        setNewGame({});
+        setNewGame(initialNewGame);
     }
 
     function changeNewGame(e, { name, value }) {
@@ -37,7 +39,7 @@ const AddGameForm = () => {
                     <FormField
                         control={Input}
                         name='age'
-                        label='Ages #+'
+                        label={`Ages ${newGame.age}+`}
                         type='range'
                         min='2'
                         max='19'
