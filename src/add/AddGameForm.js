@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Header, Input } from 'semantic-ui-react';
+import { Button, Form, Header, Image, Input } from 'semantic-ui-react';
 
 import FormField from '../components/FormField';
 import { addGame } from '../functions/db';
@@ -11,17 +11,63 @@ const AddGameForm = () => {
         minPlayers: 1,
         maxPlayers: 2,
         company: '',
+        time: 0,
     };
 
     const [newGame, setNewGame] = React.useState(initialNewGame);
+    const [pic, setPic] = React.useState(null);
+
+    React.useEffect(() => {
+        if (pic && pic.file && !pic.src) {
+            startPicSrcLoad();
+        }
+    });
 
     function addNewGame() {
-        addGame(newGame);
-        setNewGame(initialNewGame);
+        try {
+            addGame(newGame, pic);
+            setNewGame(initialNewGame);
+            setPic(null);
+        } catch (e) {
+            console.warn(`Error adding game: ${e}`);
+        }
     }
 
     function changeNewGame(e, { name, value }) {
         setNewGame({ ...newGame, [name]: value });
+    }
+
+    function changePic(e) {
+        const currentFile = e.target.files[0];
+
+        setPic({
+            file: currentFile || null,
+            name: currentFile.name || '',
+            src: null,
+        });
+    }
+
+    function getPicSrc() {
+        return new Promise((res, rej) => {
+            try {
+                const fr = new FileReader();
+                fr.onload = function () {
+                    res(this.result);
+                };
+                fr.readAsDataURL(pic.file);
+            } catch (e) {
+                rej(e);
+            }
+        });
+    }
+
+    async function startPicSrcLoad() {
+        try {
+            const src = await getPicSrc();
+            setPic({ ...pic, src });
+        } catch (e) {
+            console.warn(e);
+        }
     }
 
     return (
@@ -40,11 +86,23 @@ const AddGameForm = () => {
                 <Form.Group widths='equal'>
                     <FormField
                         control={Input}
+                        name='time'
+                        label={`Time (${newGame.time}mins)`}
+                        type='range'
+                        min='5'
+                        max='120'
+                        step='5'
+                        onChange={changeNewGame}
+                        value={newGame.time}
+                    />
+                    <FormField
+                        control={Input}
                         name='age'
                         label={`Ages ${newGame.age}+`}
                         type='range'
                         min='2'
                         max='19'
+                        step='1'
                         onChange={changeNewGame}
                         value={newGame.age}
                     />
@@ -70,6 +128,22 @@ const AddGameForm = () => {
                     onChange={changeNewGame}
                     value={newGame.company}
                 />
+                <FormField
+                    control={Input}
+                    name='pic'
+                    label='Picture:'
+                    onChange={changePic}
+                    type='file'
+                    accept='image/*'
+                />
+                {pic && pic.file ? (
+                    <React.Fragment>
+                        <Form.Field>
+                            <label>Picture Preview</label>
+                            <Image src={pic.src} size='medium' />
+                        </Form.Field>
+                    </React.Fragment>
+                ) : null}
                 <Form.Field>
                     <Button
                         fluid

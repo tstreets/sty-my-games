@@ -22,6 +22,7 @@ const Home = ({ location: { state } }) => {
             });
         }
     }, [setAllGames, setAllGamesLoading, allGamesLoading, allGames]);
+    console.count('A');
 
     return (
         <React.Fragment>

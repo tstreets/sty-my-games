@@ -32,7 +32,7 @@ const FormField = ({
         id: name,
         name,
         value,
-        placeholder: `Enter ${name}...`,
+        placeholder: placeholder || `Enter ${name}...`,
         onChange: onChange,
         onBlur,
         type,
