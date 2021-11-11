@@ -11,12 +11,16 @@ const MenuItem = ({ icon, children, content, to, state }) => {
             : icon;
     return (
         <React.Fragment>
-            <Link to={to ? to : '/'} state={state}>
-                <li className='text-light-side navbar-link'>
+            <li className='text-light-side navbar-link'>
+                <Link
+                    className='text-light-side navbar-link'
+                    to={to ? to : '/'}
+                    state={state}
+                >
                     {icon ? <Icon {...iconProps} /> : null}
                     <span>{children || content}</span>
-                </li>
-            </Link>
+                </Link>
+            </li>
         </React.Fragment>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.css';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Loader } from 'semantic-ui-react';
 
 import '../css/styles.css';
 import Navbar from '../components/Navbar';
@@ -31,9 +31,10 @@ const Home = ({ location: { state } }) => {
                 </Header>
 
                 <GameCardGroup>
+                    <Loader active={allGamesLoading} />
                     {allGames.length
                         ? allGames.map((game, i) => {
-                              if (!game.id) return;
+                              if (!game.id) return null;
                               return (
                                   <React.Fragment key={`game-card-${i}`}>
                                       <GameCard {...game} />

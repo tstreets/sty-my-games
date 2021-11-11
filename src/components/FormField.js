@@ -18,6 +18,7 @@ const FormField = ({
     max,
     step,
     disabled,
+    accept,
     // select
     options,
     clearable,
@@ -39,6 +40,7 @@ const FormField = ({
         max,
         step,
         disabled,
+        accept,
     };
 
     const selectProps = {

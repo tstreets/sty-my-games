@@ -75,8 +75,9 @@ const AddGameForm = () => {
                         fluid
                         content='Add Game'
                         icon='plus'
-                        color='green'
+                        className='bg-dark text-light-side'
                         type='button'
+                        circular
                         onClick={addNewGame}
                     />
                 </Form.Field>
