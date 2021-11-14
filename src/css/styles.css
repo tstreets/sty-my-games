@@ -69,6 +69,7 @@
     height: 100vh;
     display: flex !important;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .mt-auto {
@@ -134,9 +135,17 @@
     margin: 0 48px 24px 0px;
 }
 
+.game-card-image {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 200px;
+}
+
 @media only screen and (max-width: 425px) {
     .game-card-group {
         flex-direction: column;
+        flex-wrap: nowrap;
         align-items: center;
     }
 
@@ -164,4 +173,21 @@
 
 .game-card p {
     margin: 0;
+}
+
+/* search form */
+.search-form {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.search-form input {
+    border: 1px solid #d64b18 !important;
+}
+
+.search-form input[type='range']::-webkit-slider-thumb {
+    border: 12px solid #000000;
+    cursor: pointer;
 }

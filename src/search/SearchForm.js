@@ -15,7 +15,7 @@ const SearchForm = ({ filters, setFilters }) => {
 
     return (
         <React.Fragment>
-            <Form style={{ marginBottom: '24px' }}>
+            <Form className='search-form'>
                 <FormField
                     control={Input}
                     label='Name:'

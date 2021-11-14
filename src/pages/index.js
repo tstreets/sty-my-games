@@ -22,7 +22,6 @@ const Home = ({ location: { state } }) => {
             });
         }
     }, [setAllGames, setAllGamesLoading, allGamesLoading, allGames]);
-    console.count('A');
 
     return (
         <React.Fragment>
@@ -38,7 +37,14 @@ const Home = ({ location: { state } }) => {
                               if (!game.id) return null;
                               return (
                                   <React.Fragment key={`game-card-${i}`}>
-                                      <GameCard {...game} />
+                                      <GameCard
+                                          {...game}
+                                          state={{
+                                              ...state,
+                                              games: allGames,
+                                              game,
+                                          }}
+                                      />
                                   </React.Fragment>
                               );
                           })

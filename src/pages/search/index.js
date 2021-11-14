@@ -1,6 +1,6 @@
 import React from 'react';
 import 'semantic-ui-css/semantic.css';
-import { Container, Header, Loader } from 'semantic-ui-react';
+import { Button, Container, Header, Loader } from 'semantic-ui-react';
 
 import '../../css/styles.css';
 import Navbar from '../../components/Navbar';
@@ -14,6 +14,7 @@ const Search = ({ location: { state } }) => {
     const { games = [] } = state || {};
     const [allGames, setAllGames] = React.useState(games);
     const [allGamesLoading, setAllGamesLoading] = React.useState(false);
+    const [showFilters, setShowFilters] = React.useState(false);
 
     const initialFilters = {
         name: '',
@@ -70,6 +71,10 @@ const Search = ({ location: { state } }) => {
           )
         : [];
 
+    function toggleSearch() {
+        setShowFilters(!showFilters);
+    }
+
     return (
         <React.Fragment>
             <Container className='fullsite'>
@@ -77,21 +82,35 @@ const Search = ({ location: { state } }) => {
                     Search
                 </Header>
 
-                <SearchForm filters={filters} setFilters={setFilters} />
+                {showFilters ? (
+                    <SearchForm filters={filters} setFilters={setFilters} />
+                ) : (
+                    <React.Fragment>
+                        <GameCardGroup>
+                            <Loader active={allGamesLoading} />
+                            {filtersGames.length
+                                ? filtersGames.map((game, i) => {
+                                      if (!game.id) return null;
+                                      return (
+                                          <React.Fragment
+                                              key={`game-card-${i}`}
+                                          >
+                                              <GameCard {...game} />
+                                          </React.Fragment>
+                                      );
+                                  })
+                                : null}
+                        </GameCardGroup>
+                    </React.Fragment>
+                )}
 
-                <GameCardGroup>
-                    <Loader active={allGamesLoading} />
-                    {filtersGames.length
-                        ? filtersGames.map((game, i) => {
-                              if (!game.id) return null;
-                              return (
-                                  <React.Fragment key={`game-card-${i}`}>
-                                      <GameCard {...game} />
-                                  </React.Fragment>
-                              );
-                          })
-                        : null}
-                </GameCardGroup>
+                <Button
+                    content={`${showFilters ? 'Hide' : 'Show'} Filters`}
+                    style={{ marginTop: '16px' }}
+                    icon='sync'
+                    color='orange'
+                    onClick={toggleSearch}
+                />
 
                 <Navbar
                     className='mt-auto'

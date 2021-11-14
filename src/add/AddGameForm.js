@@ -37,13 +37,14 @@ const AddGameForm = () => {
         setNewGame({ ...newGame, [name]: value });
     }
 
-    function changePic(e) {
+    function changePic(e, { value }) {
         const currentFile = e.target.files[0];
 
         setPic({
             file: currentFile || null,
             name: currentFile.name || '',
             src: null,
+            value,
         });
     }
 
@@ -75,7 +76,7 @@ const AddGameForm = () => {
             <Header className='page-header' as='h1'>
                 Add New Game
             </Header>
-            <Form>
+            <Form className='search-form'>
                 <FormField
                     control={Input}
                     name='name'
@@ -135,6 +136,7 @@ const AddGameForm = () => {
                     onChange={changePic}
                     type='file'
                     accept='image/*'
+                    value={pic?.value}
                 />
                 {pic && pic.file ? (
                     <React.Fragment>

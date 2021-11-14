@@ -1,8 +1,9 @@
 import React from 'react';
-import { Image } from 'semantic-ui-react';
-import {} from 'gatsby';
+import {} from 'semantic-ui-react';
+import { Link } from 'gatsby';
 
 const GameCard = ({
+    id,
     name,
     company,
     maxPlayers,
@@ -11,18 +12,28 @@ const GameCard = ({
     time,
     picName,
     picUrl,
+    state,
 }) => {
     return (
         <React.Fragment>
             <li className='game-card'>
-                <h2>{name}</h2>
-                <h3>{company}</h3>
-                {picName && picUrl ? <Image src={picUrl} size='small' /> : null}
-                <p>Time ({time}mins)</p>
-                <p>Ages {age}+</p>
-                <p>
-                    {minPlayers}-{maxPlayers} players
-                </p>
+                <Link to={`/game/${id}`} state={{ ...state }}>
+                    <h2>{name}</h2>
+                    <h3>{company}</h3>
+                    {picName && picUrl ? (
+                        <div
+                            className='game-card-image'
+                            style={{
+                                backgroundImage: `url(${picUrl})`,
+                            }}
+                        />
+                    ) : null}
+                    <p>Time ({time}mins)</p>
+                    <p>Ages {age}+</p>
+                    <p>
+                        {minPlayers}-{maxPlayers} players
+                    </p>
+                </Link>
             </li>
         </React.Fragment>
     );
