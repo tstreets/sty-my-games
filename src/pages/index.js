@@ -14,7 +14,7 @@ const Home = ({ location: { state } }) => {
     const [allGamesLoading, setAllGamesLoading] = React.useState(false);
 
     React.useEffect(() => {
-        if (!allGames.length && !allGamesLoading) {
+        if (!allGames[0]?.id && !allGamesLoading) {
             setAllGamesLoading(true);
             getGames(newAllGames => {
                 setAllGames(newAllGames);

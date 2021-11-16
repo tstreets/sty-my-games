@@ -11,10 +11,14 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+const mainC = 'apps';
+// const mainC = 'test-apps';
+const mainD = 'my-games';
+
 export async function getGames(callback) {
     try {
         const gamesRef = await getDocs(
-            collection(doc(db, 'apps', 'my-games'), 'games')
+            collection(doc(db, mainC, mainD), 'games')
         );
         const allGames = [];
 
@@ -25,7 +29,7 @@ export async function getGames(callback) {
                     ...gameDoc.data(),
                 });
             });
-        } else allGames.push({});
+        } else allGames.push({ id: 0 });
 
         for (let i = 0; i < allGames.length; i++) {
             const game = allGames[i];
@@ -36,17 +40,17 @@ export async function getGames(callback) {
         callback(allGames);
     } catch (e) {
         console.warn(`Failed to get games: ${e}`);
-        callback([{}]);
+        callback([{ id: 0 }]);
     }
 }
 
 export async function addGame(gameData, pic) {
     try {
-        await addDoc(collection(doc(db, 'apps', 'my-games'), 'games'), {
+        await addDoc(collection(doc(db, mainC, mainD), 'games'), {
             ...gameData,
-            picName: pic.name,
+            picName: `my-games/${pic.name}`,
         });
-        const gamesRef = ref(storage, pic.name);
+        const gamesRef = ref(storage, `my-games/${pic.name}`);
         await uploadBytes(gamesRef, pic.file);
         return true;
     } catch (e) {

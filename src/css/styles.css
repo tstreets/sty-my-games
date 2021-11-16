@@ -191,3 +191,10 @@
     border: 12px solid #d64b18;
     cursor: pointer;
 }
+
+@media only screen and (max-width: 425px) {
+    .search-form input[type='range']::-webkit-slider-thumb {
+        border: 16px solid #d64b18;
+        cursor: pointer;
+    }
+}
