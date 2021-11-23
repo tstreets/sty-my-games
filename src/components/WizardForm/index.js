@@ -13,14 +13,14 @@ export const WizardFormPage = ({ header, content, children }) => {
     const otherChildren = isChildrenArr
         ? children.filter(c => {
               if (typeof c === 'string') return false;
-              return c?.type?.name !== 'WizardFormHeader';
+              return !c?.props?.isWizardFormHeader;
           })
         : null;
 
     const headerChild = isChildrenArr
         ? children.find(c => {
               if (typeof c === 'string') return false;
-              return c?.type?.name === 'WizardFormHeader';
+              return c?.props?.isWizardFormPage;
           })
         : null;
 
@@ -101,33 +101,34 @@ const WizardForm = ({
     const buttons = isChildrenArr
         ? children.find(c => {
               if (typeof c === 'string') return false;
-              return c.type.name === 'WizardFormButtons';
+              return c.props?.isWizardFormButtons;
           })
         : children &&
           typeof children !== 'string' &&
-          children?.type?.name === 'WizardFormButtons'
+          children?.props?.isWizardFormButtons
         ? children
         : null;
 
     const wizardPages = isChildrenArr
         ? children.filter(c => {
               if (typeof c === 'string') return false;
-              return c.type.name === 'WizardFormPage';
+              return c.props?.isWizardFormPage;
           })
         : children &&
           typeof children !== 'string' &&
-          children?.type?.name === 'WizardFormPage'
+          children?.props?.isWizardFormButtons
         ? [children]
         : null;
 
     const wizardHeader = isChildrenArr
         ? children.find(c => {
               if (typeof c === 'string') return false;
-              return c.type.name === 'WizardFormHeader';
+              console.log(c);
+              return c.props?.isWizardFormHeader;
           })
         : children &&
           typeof children !== 'string' &&
-          children?.type?.name === 'WizardFormHeader'
+          children?.props?.isWizardFormHeader
         ? children
         : null;
 

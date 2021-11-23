@@ -120,9 +120,13 @@ const Add = ({ location: { state } }) => {
     return (
         <React.Fragment>
             <WizardForm fluid onDone={attemptAddGame}>
-                <WizardForm.Header>Add New Game</WizardForm.Header>
-                <WizardForm.Page>
-                    <WizardForm.Header>Base Info</WizardForm.Header>
+                <WizardForm.Header isWizardFormHeader>
+                    Add New Game
+                </WizardForm.Header>
+                <WizardForm.Page isWizardFormPage>
+                    <WizardForm.Header isWizardFormHeader>
+                        Base Info
+                    </WizardForm.Header>
                     <Form.Field>
                         <label htmlFor='name'>Name</label>
                         <Input
@@ -142,8 +146,10 @@ const Add = ({ location: { state } }) => {
                         />
                     </Form.Field>
                 </WizardForm.Page>
-                <WizardForm.Page>
-                    <WizardForm.Header>Search More Details</WizardForm.Header>
+                <WizardForm.Page isWizardFormPage>
+                    <WizardForm.Header isWizardFormHeader>
+                        Search More Details
+                    </WizardForm.Header>
                     <Button
                         type='button'
                         icon='search'
@@ -176,8 +182,10 @@ const Add = ({ location: { state } }) => {
                         />
                     ) : null}
                 </WizardForm.Page>
-                <WizardForm.Page>
-                    <WizardForm.Header>Finalize Details</WizardForm.Header>
+                <WizardForm.Page isWizardFormPage>
+                    <WizardForm.Header isWizardFormHeader>
+                        Finalize Details
+                    </WizardForm.Header>
 
                     <Form.Field>
                         <label htmlFor='name'>Name</label>
