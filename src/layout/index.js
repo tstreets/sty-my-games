@@ -16,10 +16,13 @@ const Layout = ({ children, location }) => {
         }
     }
 
+    const pathnameArr = pathname.split('/');
+    const newPathname = pathnameArr[pathnameArr.length - 1];
+
     const newState = {
         ...storedState,
         ...(state || {}),
-        lastPage: `${pathname}${hash}`,
+        lastPage: `${newPathname}${hash}`,
     };
 
     return (
