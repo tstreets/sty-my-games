@@ -1,56 +1,49 @@
+import { Link } from 'gatsby';
 import React from 'react';
-import 'semantic-ui-css/semantic.css';
-import { Container, Header } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
-import '../../css/styles.css';
-import Navbar from '../../components/Navbar';
-
-import app from 'gatsby-plugin-firebase-v9.0';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
-
-const provider = new GoogleAuthProvider();
-const auth = getAuth(app);
-auth.languageCode = 'it';
-
-provider.setCustomParameters({
-    login_hint: 'user@example.com',
-});
+import { loginUser } from '../../functions/db';
 
 const Login = ({ location: { state } }) => {
-    function signIn() {
-        signInWithPopup(auth, provider)
-            .then(result => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential =
-                    GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
-                const user = result.user;
-                // ...
+    const [user, setUser] = React.useState(null);
+    const [userLoading, setUserLoading] = React.useState(false);
+    const [error, setError] = React.useState('');
 
-                console.log(token, user);
-            })
-            .catch(error => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.email;
-                // The AuthCredential type that was used.
-                const credential =
-                    GoogleAuthProvider.credentialFromError(error);
-                // ...
-                console.log(errorCode, errorMessage);
+    async function attemptLogin() {
+        if (userLoading) return;
+        setUserLoading(true);
+        try {
+            const { email, displayName } = await loginUser();
+            if (!email) {
+                setError(`Login Failed: No email found`);
+                return;
+            }
+            if (error) setError('');
+            setUser({
+                email,
+                displayName,
             });
+        } catch {
+            setError('Login Failed');
+        }
+        setUserLoading(false);
     }
 
     return (
         <React.Fragment>
-            <Container className='fullsite'>
-                <Header className='page-header'>Login</Header>
-                <button onClick={signIn} children='Login' />
-                <Navbar className='mt-auto' state={{ ...state }} />
-            </Container>
+            {error ? <p style={{ color: 'red' }}>{error}</p> : null}
+            {!user ? (
+                <Button onClick={attemptLogin}>Login</Button>
+            ) : (
+                <React.Fragment>
+                    <Link
+                        to={state.lastPage || '/'}
+                        state={{ ...(state || {}), user }}
+                    >
+                        <Button>Go Explore!</Button>
+                    </Link>
+                </React.Fragment>
+            )}
         </React.Fragment>
     );
 };

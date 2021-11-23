@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* 
+#F1F9FF - white
+#D64B18 - darkest
+#F2784B - dark
+#FAB69D - light
+#FFE5DB - lightest
+#2699FB - accent
+#BCE0FD - accent light 
+*/
+
+.fullsite {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-bottom: 12px;
+}
+
+.mainnav {
+    width: 100%;
+    height: 50px;
+    background-color: #d64b18;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+}
+
+.mainnav ul {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.mainnav ul li {
+    text-decoration: none;
+    list-style: none;
+    font-size: 28px;
+}
+
+.mainnav ul li a {
+    color: #ffe5db;
+}
+
+@media only screen and (max-width: 425px) {
+    .mainnav ul li span {
+        display: none;
+    }
+}
+
+.mainheader {
+    font-size: 28px;
+    height: 52px;
+    border: 2px solid #d64b18;
+    color: #d64b18;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.gamecard {
+    width: 360px;
+    height: 460px;
+    border: 1px solid #d64b18;
+    background-color: #ffe5db;
+    padding: 16px 32px;
+    margin-bottom: 16px;
+    list-style: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.gamecard-header {
+    font-size: 20px;
+    color: #d64b18 !important;
+}
+
+.gamecard-text {
+    color: #d64b18;
+    font-size: 16px;
+    max-height: 172px;
+    overflow-y: hidden;
+}
+
+.gamecard-image {
+    width: 296px;
+    height: 172px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: white;
+    margin-bottom: 16px;
+}
+
+.gamecard-otherinfo,
+.gameinfo-taglist {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.gamecard-tag,
+.gameinfo-tag {
+    list-style: none;
+    background-color: #f1f9ff;
+    border: 0.25px solid #2699fb;
+    color: #2699fb;
+
+    height: 32px;
+    border-radius: 4px;
+    margin: 0 8px 8px 0;
+
+    letter-spacing: 1.25px;
+    padding: 2px 8px;
+
+    font-weight: bold;
+}
+
+.gameinfo-image {
+    width: 400px;
+    height: 300px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: white;
+    margin-bottom: 16px;
+}

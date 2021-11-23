@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunksty_my_games=self.webpackChunksty_my_games||[]).push([[939],{1745:function(e,a,t){t.r(a);var s=t(7294),l=t(2945),n=t(6613),c=t(2927);a.default=function(e){var a=e.location.state;return s.createElement(s.Fragment,null,s.createElement(l.Z,{className:"fullsite"},s.createElement(n.Z,{className:"page-header",as:"h1"},"Saved"),s.createElement(c.Z,{className:"mt-auto",state:a})))}}}]);
-//# sourceMappingURL=component---src-pages-saved-index-js-cc082b47044c9f4c8a85.js.map

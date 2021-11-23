@@ -1,61 +1,47 @@
 import React from 'react';
-import 'semantic-ui-css/semantic.css';
-import { Container, Header, Loader } from 'semantic-ui-react';
+import {} from 'semantic-ui-react';
 
-import '../css/styles.css';
-import Navbar from '../components/Navbar';
-import { getGames } from '../functions/db';
 import GameCard from '../components/GameCard';
-import GameCardGroup from '../components/GameCard/GameCardGroup';
+import { getAllGames } from '../functions/db';
 
 const Home = ({ location: { state } }) => {
-    const { games = [] } = state || {};
-    const [allGames, setAllGames] = React.useState(games);
+    const [allGames, setAllGames] = React.useState(state.allGames || null);
     const [allGamesLoading, setAllGamesLoading] = React.useState(false);
 
     React.useEffect(() => {
-        if (!allGames[0]?.id && !allGamesLoading) {
-            setAllGamesLoading(true);
-            getGames(newAllGames => {
-                setAllGames(newAllGames);
-                setAllGamesLoading(false);
-            });
-        }
-    }, [setAllGames, setAllGamesLoading, allGamesLoading, allGames]);
+        attemptGetAllGames();
+    });
+
+    async function attemptGetAllGames() {
+        if (allGamesLoading || allGames) return;
+        setAllGamesLoading(true);
+        try {
+            const newAllGames = await getAllGames();
+            setAllGames(newAllGames);
+        } catch {}
+        setAllGamesLoading(false);
+    }
+
+    console.log(allGames);
 
     return (
         <React.Fragment>
-            <Container className='fullsite'>
-                <Header className='page-header' as='h1'>
-                    Explore
-                </Header>
-
-                <GameCardGroup>
-                    <Loader active={allGamesLoading} />
-                    {allGames.length
-                        ? allGames.map((game, i) => {
-                              if (!game.id) return null;
-                              return (
-                                  <React.Fragment key={`game-card-${i}`}>
-                                      <GameCard
-                                          {...game}
-                                          state={{
-                                              ...state,
-                                              games: allGames,
-                                              game,
-                                          }}
-                                      />
-                                  </React.Fragment>
-                              );
-                          })
-                        : null}
-                </GameCardGroup>
-
-                <Navbar
-                    className='mt-auto'
-                    state={{ ...state, games: allGames }}
-                />
-            </Container>
+            <h2>Explore</h2>
+            <GameCard.Group>
+                {allGames && allGames.length ? (
+                    allGames.map((g, i) => {
+                        return (
+                            <GameCard
+                                key={`game-card-${i}-${g.id}`}
+                                game={g}
+                                state={{ ...(state || {}), allGames: allGames }}
+                            ></GameCard>
+                        );
+                    })
+                ) : (
+                    <p>Sorry, no games available.</p>
+                )}
+            </GameCard.Group>
         </React.Fragment>
     );
 };

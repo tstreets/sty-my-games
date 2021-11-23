@@ -1,7 +1,7 @@
 module.exports = {
     siteMetadata: {
-        siteUrl: 'https://www.yourdomain.tld',
-        title: 'Copy Project',
+        siteUrl: 'https://tstreets.github.io/sty-my-games/public',
+        title: "Streets' Games",
     },
     plugins: [
         {

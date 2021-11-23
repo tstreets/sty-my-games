@@ -1,0 +1,26 @@
+.wizard {
+    max-width: 700px !important;
+    padding: 8px;
+    border: 2px solid black;
+}
+
+.wizard.fluid {
+    max-width: 100% !important;
+}
+
+.wizard h1 {
+    text-align: center;
+}
+
+.wizard fieldset {
+    margin-bottom: 16px;
+    padding-top: 16px;
+}
+
+.wizard legend {
+    font-size: 24px;
+}
+
+.wizard .btns {
+    flex-wrap: nowrap !important;
+}

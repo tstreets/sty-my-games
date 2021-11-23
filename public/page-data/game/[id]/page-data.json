@@ -1,6 +1,0 @@
-{
-    "componentChunkName": "component---src-pages-game-[id]-js",
-    "path": "/game/[id]/",
-    "result": {"pageContext":{}},
-    "staticQueryHashes": [],
-    "matchPath": "/game/:id"}

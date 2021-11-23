@@ -1,60 +1,74 @@
 import app from 'gatsby-plugin-firebase-v9.0';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import {
     getFirestore,
-    doc,
-    getDocs,
     collection,
+    doc,
     addDoc,
+    getDocs,
+    getDoc,
 } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import {} from 'firebase/storage';
 
-const db = getFirestore(app);
-const storage = getStorage(app);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
-const mainC = 'apps';
-// const mainC = 'test-apps';
-const mainD = 'my-games';
-
-export async function getGames(callback) {
+export async function loginUser() {
     try {
-        const gamesRef = await getDocs(
-            collection(doc(db, mainC, mainD), 'games')
-        );
-        const allGames = [];
-
-        if (!gamesRef.empty) {
-            gamesRef.docs.forEach(gameDoc => {
-                allGames.push({
-                    id: gameDoc.id,
-                    ...gameDoc.data(),
-                });
-            });
-        } else allGames.push({ id: 0 });
-
-        for (let i = 0; i < allGames.length; i++) {
-            const game = allGames[i];
-            if (!game.picName) continue;
-            game.picUrl = await getDownloadURL(ref(storage, game.picName));
-        }
-
-        callback(allGames);
+        const { user } = await signInWithPopup(auth, googleProvider);
+        return user;
     } catch (e) {
-        console.warn(`Failed to get games: ${e}`);
-        callback([{ id: 0 }]);
+        return null;
     }
 }
 
-export async function addGame(gameData, pic) {
+const db = getFirestore(app);
+const appsCollection = 'test';
+const appName = 'my-games';
+
+export async function addGame({ gameData = {}, user = {} }) {
     try {
-        await addDoc(collection(doc(db, mainC, mainD), 'games'), {
+        const gamesRef = collection(doc(db, appsCollection, appName), 'games');
+        const newGameRef = await addDoc(gamesRef, {
+            addedBy: user.email,
+            dateAdded: Date.now(),
             ...gameData,
-            picName: `my-games/${pic.name}`,
         });
-        const gamesRef = ref(storage, `my-games/${pic.name}`);
-        await uploadBytes(gamesRef, pic.file);
-        return true;
-    } catch (e) {
-        console.warn(`Failed to add new game: ${e}`);
-        return false;
+        return newGameRef.id;
+    } catch {
+        return null;
+    }
+}
+
+export async function getAllGames() {
+    try {
+        const gamesRef = collection(doc(db, appsCollection, appName), 'games');
+        const allGamesRef = await getDocs(gamesRef);
+        const allGames = [];
+        for (let gameRef of allGamesRef.docs) {
+            const gameData = gameRef.data();
+            allGames.push({
+                ...gameData,
+                id: gameRef.id,
+            });
+        }
+        return allGames;
+    } catch {
+        return [];
+    }
+}
+
+export async function getGame(gameId) {
+    try {
+        const myGamesRef = doc(db, appsCollection, appName);
+        const gameRef = await getDoc(doc(myGamesRef, 'games', gameId));
+        if (!gameRef.id) return {};
+        const gameData = gameRef.data();
+        return {
+            ...gameData,
+            id: gameRef.id,
+        };
+    } catch {
+        return {};
     }
 }

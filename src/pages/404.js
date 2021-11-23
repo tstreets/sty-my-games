@@ -1,18 +1,14 @@
 import React from 'react';
-import { Container, Header } from 'semantic-ui-react';
-
-import '../css/styles.css';
-import Navbar from '../components/Navbar';
+import {} from 'semantic-ui-react';
+import { Link } from 'gatsby';
 
 const NotFound = ({ location: { state } }) => {
     return (
         <React.Fragment>
-            <Container className='fullsite'>
-                <Header className='page-header' as='h1'>
-                    Page Not Found
-                </Header>
-                <Navbar className='mt-auto' state={state} />
-            </Container>
+            <h1>Page Not Found</h1>
+            <Link to='/' state={state}>
+                Go back home
+            </Link>
         </React.Fragment>
     );
 };

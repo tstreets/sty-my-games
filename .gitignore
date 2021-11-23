@@ -1,4 +1,3 @@
 node_modules/
 .cache/
 firebase-cred.js
-gatsby-plugin-firebase-app
