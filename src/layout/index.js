@@ -31,7 +31,7 @@ const Layout = ({ children, location }) => {
                         <Container className='content'>{children}</Container>
                         <Navbar state={newState} />
                     </React.Fragment>
-                ) : pathname === '/login' ? (
+                ) : pathname.includes('login') ? (
                     <React.Fragment>
                         <Container className='content'>{children}</Container>
                     </React.Fragment>
