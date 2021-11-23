@@ -37,7 +37,9 @@ const Login = ({ location: { state } }) => {
             ) : (
                 <React.Fragment>
                     <Link
-                        to={state?.lastPage || '/'}
+                        to={
+                            state && state.lastPage ? `/${state.lastPage}` : '/'
+                        }
                         state={{ ...(state || {}), user }}
                     >
                         <Button>Go Explore!</Button>

@@ -22,8 +22,6 @@ const Home = ({ location: { state } }) => {
         setAllGamesLoading(false);
     }
 
-    console.log(allGames);
-
     return (
         <React.Fragment>
             <h2>Explore</h2>

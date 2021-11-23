@@ -27,7 +27,7 @@ workbox.core.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-a4afd5b963ec1fef1f86.js"
+    "url": "webpack-runtime-679f5e30dc9fef53cb3f.js"
   },
   {
     "url": "styles.c7441a9e303e469cdf51.css"
@@ -36,11 +36,11 @@ self.__precacheManifest = [
     "url": "framework-286ab9e9b654e862ec9f.js"
   },
   {
-    "url": "app-82df323318fc4b2b8b61.js"
+    "url": "app-aa852669885114f24525.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "8b2b9152a9d38188bed11f18b830e076"
+    "revision": "c142a93f13cff31f8a71c25cd297e30d"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-2642c0dbf5fe3b57ddf2.js"
@@ -51,7 +51,7 @@ self.__precacheManifest = [
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "8e571f52e463cbec4a8c3875e7fc5542"
+    "revision": "134d4440975a1f34025bfef053ea7ed2"
   },
   {
     "url": "polyfill-d3ce211412d49cddb48f.js"
@@ -150,7 +150,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/sty-my-games/public/app-82df323318fc4b2b8b61.js`))) {
+  if (!resources || !(await caches.match(`/sty-my-games/public/app-aa852669885114f24525.js`))) {
     return await fetch(event.request)
   }
 

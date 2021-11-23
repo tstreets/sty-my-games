@@ -17,7 +17,7 @@ const Layout = ({ children, location }) => {
     }
 
     const pathnameArr = pathname.split('/');
-    const newPathname = pathnameArr[pathnameArr.length - 1];
+    const newPathname = pathnameArr[pathnameArr.length - 2];
 
     const newState = {
         ...storedState,
