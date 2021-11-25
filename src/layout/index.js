@@ -8,7 +8,9 @@ import './index.css';
 import Navbar from './Navbar';
 
 const Layout = ({ children, user, location: { pathname, hash } }) => {
-    const newPathname = pathname.replace('/my-games/public', '').concat(hash);
+    const newPathname = pathname
+        .replace('/sty-my-games/public', '')
+        .concat(hash);
 
     return (
         <React.Fragment>

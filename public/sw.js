@@ -36,11 +36,11 @@ self.__precacheManifest = [
     "url": "framework-5d0a3d45e6e6330f4944.js"
   },
   {
-    "url": "app-75ae02dfb474884d9bcc.js"
+    "url": "app-61a4d1cf34dbd160c32c.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "d56013a61729d5d8ce1bb4bf59034a1b"
+    "revision": "6bebd575eb8c0b2fa4cc0f8a45dd6bc6"
   },
   {
     "url": "component---cache-caches-gatsby-plugin-offline-app-shell-js-2642c0dbf5fe3b57ddf2.js"
@@ -51,7 +51,7 @@ self.__precacheManifest = [
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "3a2df83915fdabc86710fc13c02d4f8b"
+    "revision": "efdd573a07fd2279e38e43bd206a3346"
   },
   {
     "url": "polyfill-d3ce211412d49cddb48f.js"
@@ -150,7 +150,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/sty-my-games/public/app-75ae02dfb474884d9bcc.js`))) {
+  if (!resources || !(await caches.match(`/sty-my-games/public/app-61a4d1cf34dbd160c32c.js`))) {
     return await fetch(event.request)
   }
 
