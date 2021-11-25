@@ -5,7 +5,7 @@ import { Button } from 'semantic-ui-react';
 
 import { loginUser } from '../../functions/db';
 
-const Login = ({ location: { state }, user, setUser }) => {
+const Login = ({ originalPage, user, setUser }) => {
     const [loading, setLoading] = React.useState(false);
 
     async function attemptLogin() {
@@ -29,7 +29,7 @@ const Login = ({ location: { state }, user, setUser }) => {
                 <Button onClick={attemptLogin}>Login</Button>
             ) : (
                 <React.Fragment>
-                    <Link to={state?.originalPage || '/'}>
+                    <Link to={originalPage || '/'}>
                         <Button>Return to App!</Button>
                     </Link>
                 </React.Fragment>

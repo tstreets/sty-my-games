@@ -1,11 +1,11 @@
-import { Link } from 'gatsby';
 import React from 'react';
 import { connect } from 'react-redux';
 import 'semantic-ui-css/semantic.css';
-import { Container, Header, Button } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 
 import './index.css';
 import Navbar from './Navbar';
+import Login from '../pages/login';
 
 const Layout = ({ children, user, location: { pathname, hash } }) => {
     const newPathname = pathname
@@ -16,11 +16,7 @@ const Layout = ({ children, user, location: { pathname, hash } }) => {
         <React.Fragment>
             <div className='fullsite'>
                 <h1 className='mainheader'>Streets' Games</h1>
-                {pathname.includes('login') ? (
-                    <React.Fragment>
-                        <Container className='content'>{children}</Container>
-                    </React.Fragment>
-                ) : user ? (
+                {user ? (
                     <React.Fragment>
                         <Container className='content'>{children}</Container>
                         <Navbar />
@@ -28,15 +24,7 @@ const Layout = ({ children, user, location: { pathname, hash } }) => {
                 ) : (
                     <React.Fragment>
                         <Container className='content'>
-                            <Header as='h2'>
-                                Login for access to this page
-                            </Header>
-                            <Link
-                                to='/login'
-                                state={{ originalPage: newPathname }}
-                            >
-                                <Button>Go to Login Page</Button>
-                            </Link>
+                            <Login originalPage={newPathname} />
                         </Container>
                     </React.Fragment>
                 )}
