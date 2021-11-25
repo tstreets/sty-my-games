@@ -1,47 +1,38 @@
-const React = require('react');
-require('semantic-ui-css/semantic.css');
-const { Container, Button } = require('semantic-ui-react');
-const { Link } = require('gatsby');
+import { Link } from 'gatsby';
+import React from 'react';
+import { connect } from 'react-redux';
+import 'semantic-ui-css/semantic.css';
+import { Container, Header, Button } from 'semantic-ui-react';
 
-require('./index.css');
-const Navbar = require('./Navbar');
+import './index.css';
+import Navbar from './Navbar';
 
-const Layout = ({ children, location }) => {
-    const { state, pathname, hash } = location;
-    let storedState = {};
-    if (typeof window !== 'undefined') {
-        const rawStoredState = localStorage.state;
-        if (rawStoredState) {
-            storedState = JSON.parse(rawStoredState);
-        }
-    }
-
-    const pathnameArr = pathname.split('/');
-    const newPathname = pathnameArr[pathnameArr.length - 2];
-
-    const newState = {
-        ...storedState,
-        ...(state || {}),
-        lastPage: `${newPathname}${hash}`,
-    };
+const Layout = ({ children, user, location: { pathname, hash } }) => {
+    const newPathname = pathname.replace('/public', '').concat(hash);
 
     return (
         <React.Fragment>
             <div className='fullsite'>
                 <h1 className='mainheader'>Streets' Games</h1>
-                {newState.user && newState.user.email ? (
+                {pathname.includes('login') ? (
                     <React.Fragment>
                         <Container className='content'>{children}</Container>
-                        <Navbar state={newState} />
                     </React.Fragment>
-                ) : pathname.includes('login') ? (
+                ) : user ? (
                     <React.Fragment>
                         <Container className='content'>{children}</Container>
+                        <Navbar />
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <Container className='content'>
-                            <Link state={newState} to='/login'>
+                            <Header as='h2'>
+                                Login for access to this page
+                            </Header>
+                            <Link
+                                to='/login'
+                                state={{ originalPage: newPathname }}
+                            >
                                 <Button>Go to Login Page</Button>
                             </Link>
                         </Container>
@@ -52,4 +43,10 @@ const Layout = ({ children, location }) => {
     );
 };
 
-module.exports = Layout;
+function mapStateToProp({ auth }) {
+    return {
+        user: auth.user,
+    };
+}
+
+export default connect(mapStateToProp)(Layout);

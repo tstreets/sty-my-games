@@ -10,9 +10,7 @@ export const GameCardGroup = ({ children, content }) => {
     );
 };
 
-const GameCard = ({ state, game }) => {
-    // console.log(game);
-
+const GameCard = ({ game }) => {
     const tags = {
         list: [],
         count: 0,
@@ -42,7 +40,7 @@ const GameCard = ({ state, game }) => {
     return (
         <React.Fragment>
             <li className='gamecard'>
-                <Link to={`/game#/${game.id}`} state={state}>
+                <Link to={`/game#/${game.id}`}>
                     <Header className='gamecard-header' as='h3'>
                         {game.name}
                     </Header>

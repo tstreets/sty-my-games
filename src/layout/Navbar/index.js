@@ -1,15 +1,15 @@
-const React = require('react');
-const { Link } = require('gatsby');
-const { Icon } = require('semantic-ui-react');
+import React from 'react';
+import { Link } from 'gatsby';
+import { Icon } from 'semantic-ui-react';
 
-const NavLink = ({ icon, children, content, to, state }) => {
+const NavLink = ({ icon, children, content, to }) => {
     const stringIcon = typeof icon === 'string';
     const text = children || content;
 
     return (
         <React.Fragment>
             <li>
-                <Link to={to} state={state}>
+                <Link to={to}>
                     {stringIcon ? (
                         <Icon aria-label={text} name={icon} />
                     ) : (
@@ -22,24 +22,24 @@ const NavLink = ({ icon, children, content, to, state }) => {
     );
 };
 
-const Navbar = ({ state }) => {
+const Navbar = () => {
     return (
         <React.Fragment>
             <nav className='mainnav'>
                 <ul>
-                    <NavLink icon='plus' to='/add' state={state}>
+                    <NavLink icon='plus' to='/add'>
                         Add
                     </NavLink>
                     {/* <NavLink icon='saved' to='/'>
                         Saved
                     </NavLink> */}
-                    <NavLink icon='home' to='/' state={state}>
+                    <NavLink icon='home' to='/'>
                         Explore
                     </NavLink>
                     <NavLink icon='search' to='/'>
                         Search
                     </NavLink>
-                    <NavLink icon='percent' to='/' state={state}>
+                    <NavLink icon='percent' to='/'>
                         Stats
                     </NavLink>
                 </ul>
@@ -48,4 +48,4 @@ const Navbar = ({ state }) => {
     );
 };
 
-module.exports = Navbar;
+export default Navbar;

@@ -123,7 +123,6 @@ const WizardForm = ({
     const wizardHeader = isChildrenArr
         ? children.find(c => {
               if (typeof c === 'string') return false;
-              console.log(c);
               return c.props?.isWizardFormHeader;
           })
         : children &&

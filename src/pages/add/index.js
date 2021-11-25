@@ -1,12 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Input, Form, Button, Select, TextArea } from 'semantic-ui-react';
 import GamePreview from '../../components/Add/GamePreview';
 
 import WizardForm from '../../components/WizardForm';
 import { getGameSearch, getMechanics } from '../../functions/atlas';
 import { addGame } from '../../functions/db';
+import { setMechanics } from '../../reducers/gamesReducer';
 
-const Add = ({ location: { state } }) => {
+const Add = ({ setMechanics, mechanics, user }) => {
     const initialGame = {
         name: '',
         company: '',
@@ -23,14 +25,13 @@ const Add = ({ location: { state } }) => {
     };
 
     const [game, setGame] = React.useState(initialGame);
-    const [mechanics, setMechanics] = React.useState(state?.mechanics || null);
     const [mechanicsLoading, setMechanicsLoading] = React.useState(false);
     const [searchResults, setSearchResults] = React.useState([]);
     const [customMechanics, setCustomMechanics] = React.useState([]);
     const [addingGame, setAddingGame] = React.useState(false);
     const [isScrollDown, setIsScrollDown] = React.useState(true);
 
-    React.useState(() => {
+    React.useEffect(() => {
         if (!mechanics && !mechanicsLoading) {
             getAllMechanics();
         }
@@ -38,19 +39,11 @@ const Add = ({ location: { state } }) => {
 
     async function getAllMechanics() {
         setMechanicsLoading(true);
-        const newMechanics = await getMechanics();
-        storeMechanics(newMechanics);
-        setMechanics(newMechanics);
+        try {
+            const newMechanics = await getMechanics();
+            setMechanics(newMechanics);
+        } catch {}
         setMechanicsLoading(false);
-    }
-
-    function storeMechanics(newMechanics) {
-        if (typeof window !== 'undefined') {
-            localStorage.state = JSON.stringify({
-                ...(state || {}),
-                mechanics: newMechanics,
-            });
-        }
     }
 
     async function getCloseGameSearch() {
@@ -93,7 +86,7 @@ const Add = ({ location: { state } }) => {
             delete gameData.id;
             const newId = await addGame({
                 gameData: gameData,
-                user: state.user,
+                user: user,
             });
             if (newId) {
                 setGame(initialGame);
@@ -236,4 +229,15 @@ const Add = ({ location: { state } }) => {
     );
 };
 
-export default Add;
+const mapDispatchToProps = {
+    setMechanics,
+};
+
+function mapStateToProps({ games, auth }) {
+    return {
+        mechanics: games.mechanics,
+        user: auth.user,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Add);

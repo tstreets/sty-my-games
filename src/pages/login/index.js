@@ -1,48 +1,36 @@
 import { Link } from 'gatsby';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
 import { loginUser } from '../../functions/db';
 
-const Login = ({ location: { state } }) => {
-    const [user, setUser] = React.useState(null);
-    const [userLoading, setUserLoading] = React.useState(false);
-    const [error, setError] = React.useState('');
+const Login = ({ location: { state }, user, setUser }) => {
+    const [loading, setLoading] = React.useState(false);
 
     async function attemptLogin() {
-        if (userLoading) return;
-        setUserLoading(true);
+        if (loading) return;
+        setLoading(true);
         try {
             const { email, displayName } = await loginUser();
-            if (!email) {
-                setError(`Login Failed: No email found`);
-                return;
+            if (email) {
+                setUser({
+                    email,
+                    displayName,
+                });
             }
-            if (error) setError('');
-            setUser({
-                email,
-                displayName,
-            });
-        } catch {
-            setError('Login Failed');
-        }
-        setUserLoading(false);
+        } catch {}
+        setLoading(false);
     }
 
     return (
         <React.Fragment>
-            {error ? <p style={{ color: 'red' }}>{error}</p> : null}
             {!user ? (
                 <Button onClick={attemptLogin}>Login</Button>
             ) : (
                 <React.Fragment>
-                    <Link
-                        to={
-                            state && state.lastPage ? `/${state.lastPage}` : '/'
-                        }
-                        state={{ ...(state || {}), user }}
-                    >
-                        <Button>Go Explore!</Button>
+                    <Link to={state?.originalPage || '/'}>
+                        <Button>Return to App!</Button>
                     </Link>
                 </React.Fragment>
             )}
@@ -50,4 +38,16 @@ const Login = ({ location: { state } }) => {
     );
 };
 
-export default Login;
+const mapDispatchToProps = {
+    setUser(newUser) {
+        return { type: 'authUserLogin', user: newUser };
+    },
+};
+
+function mapStateToProp({ auth }) {
+    return {
+        user: auth.user,
+    };
+}
+
+export default connect(mapStateToProp, mapDispatchToProps)(Login);

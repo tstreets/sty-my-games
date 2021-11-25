@@ -1,47 +1,80 @@
 import React from 'react';
-import {} from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
 
 import GameCard from '../components/GameCard';
 import { getAllGames } from '../functions/db';
 
-const Home = ({ location: { state } }) => {
-    const [allGames, setAllGames] = React.useState(state.allGames || null);
-    const [allGamesLoading, setAllGamesLoading] = React.useState(false);
+import { setAllGames } from '../reducers/gamesReducer';
+
+const Home = ({ allGames, setAllGames }) => {
+    const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         attemptGetAllGames();
     });
 
     async function attemptGetAllGames() {
-        if (allGamesLoading || allGames) return;
-        setAllGamesLoading(true);
+        if (loading || allGames) return;
+        setLoading(true);
         try {
             const newAllGames = await getAllGames();
             setAllGames(newAllGames);
         } catch {}
-        setAllGamesLoading(false);
+        setLoading(false);
     }
+
+    function reloadGames() {
+        if (loading) return;
+        setAllGames(null);
+    }
+
+    const sortedGames = allGames
+        ? allGames.sort((a, b) => {
+              return a.name > b.name ? 1 : -1;
+          })
+        : [];
 
     return (
         <React.Fragment>
             <h2>Explore</h2>
+            <Button
+                style={{ position: 'fixed', top: '10%', right: '20px' }}
+                color='purple'
+                icon='sync'
+                onClick={reloadGames}
+                size='small'
+                aria-label='Reload Games'
+                content='Reload Games'
+            />
             <GameCard.Group>
                 {allGames && allGames.length ? (
-                    allGames.map((g, i) => {
+                    sortedGames.map((g, i) => {
                         return (
                             <GameCard
                                 key={`game-card-${i}-${g.id}`}
                                 game={g}
-                                state={{ ...(state || {}), allGames: allGames }}
                             ></GameCard>
                         );
                     })
-                ) : (
+                ) : allGames ? (
                     <p>Sorry, no games available.</p>
+                ) : (
+                    <p>Please wait while the games are loading</p>
                 )}
             </GameCard.Group>
         </React.Fragment>
     );
 };
 
-export default Home;
+const mapDispatchToProps = {
+    setAllGames,
+};
+
+function mapStateToProps({ games }) {
+    return {
+        allGames: games.allGames,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
