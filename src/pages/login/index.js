@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Button } from 'semantic-ui-react';
 
 import { loginUser } from '../../functions/db';
+import { setUser } from '../../reducers/authReducer';
 
 const Login = ({ originalPage, user, setUser }) => {
     const [loading, setLoading] = React.useState(false);
@@ -39,9 +40,7 @@ const Login = ({ originalPage, user, setUser }) => {
 };
 
 const mapDispatchToProps = {
-    setUser(newUser) {
-        return { type: 'authUserLogin', user: newUser };
-    },
+    setUser,
 };
 
 function mapStateToProp({ auth }) {
