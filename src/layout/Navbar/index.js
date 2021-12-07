@@ -9,19 +9,33 @@ const NavLink = ({ icon, children, content, to, noLink, handler }) => {
     const stringIcon = typeof icon === 'string';
     const text = children || content;
 
-    const Parent = noLink ? React.Fragment : Link;
+    function doNothing() {}
+
+    const LinkContent = () => {
+        return (
+            <React.Fragment>
+                {stringIcon ? (
+                    <Icon aria-label={text} name={icon} />
+                ) : (
+                    <Icon aria-label={text} {...icon} />
+                )}
+                <span>{text}</span>
+            </React.Fragment>
+        );
+    };
 
     return (
         <React.Fragment>
-            <li onClick={handler}>
-                <Parent to={noLink ? null : to}>
-                    {stringIcon ? (
-                        <Icon aria-label={text} name={icon} />
-                    ) : (
-                        <Icon aria-label={text} {...icon} />
-                    )}
-                    <span>{text}</span>
-                </Parent>
+            <li onClick={handler || doNothing}>
+                {noLink ? (
+                    <a href={to}>
+                        <LinkContent />
+                    </a>
+                ) : (
+                    <Link to={to}>
+                        <LinkContent />
+                    </Link>
+                )}
             </li>
         </React.Fragment>
     );
@@ -43,7 +57,7 @@ const Navbar = ({ setUser, user }) => {
                     <NavLink icon='search' to='/'>
                         Search
                     </NavLink>
-                    <NavLink icon='percent' to='/'>
+                    <NavLink icon='percent' to='/stats'>
                         Stats
                     </NavLink>
                     {!user ? (
@@ -51,7 +65,7 @@ const Navbar = ({ setUser, user }) => {
                             Login
                         </NavLink>
                     ) : (
-                        <NavLink icon='x' handler={() => setUser(null)}>
+                        <NavLink noLink icon='x' handler={() => setUser(null)}>
                             Logout
                         </NavLink>
                     )}

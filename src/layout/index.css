@@ -55,7 +55,7 @@ body {
     font-size: 28px;
 }
 
-.mainnav ul li a {
+.mainnav ul li * {
     color: #ffe5db;
 }
 

@@ -1,22 +1,40 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { connect } from 'react-redux';
-import { Grid, Header } from 'semantic-ui-react';
+import { Button, Grid, Header } from 'semantic-ui-react';
 
-import { getGame } from '../../functions/db';
+import { getGame, checkAdmin } from '../../functions/db';
 import { setCurrentGame } from '../../reducers/gamesReducer';
+import { setIsAdmin } from '../../reducers/authReducer';
 
 const Game = ({
     location: { hash },
     allGames,
     currentGame,
     setCurrentGame,
+    user,
+    isAdmin,
+    setIsAdmin,
 }) => {
     const splitHash = hash.split('/');
     const [loading, setLoading] = React.useState(false);
 
     React.useState(() => {
         attemptGetGame();
+        attemptCheckAdmin();
     });
+
+    async function attemptCheckAdmin() {
+        if (loading || !user || typeof isAdmin === 'boolean') return;
+        setLoading(true);
+        try {
+            const newIsAdmin = await checkAdmin(user);
+            setIsAdmin(newIsAdmin || false);
+        } catch {
+            setIsAdmin(false);
+        }
+        setLoading(false);
+    }
 
     async function attemptGetGame() {
         if (loading || currentGame || allGames) return;
@@ -37,6 +55,19 @@ const Game = ({
     return (
         <React.Fragment>
             <Grid>
+                {user && isAdmin ? (
+                    <Grid.Row>
+                        <Grid.Column>
+                            <Link to={`/game/edit#/${splitHash[1]}`}>
+                                <Button
+                                    content='Edit Game'
+                                    icon='pencil'
+                                    color='orange'
+                                />
+                            </Link>
+                        </Grid.Column>
+                    </Grid.Row>
+                ) : null}
                 {displayGame && displayGame.id ? (
                     <React.Fragment>
                         <Grid.Row columns='1'>
@@ -109,12 +140,15 @@ const Game = ({
 
 const mapDispatchToProps = {
     setCurrentGame,
+    setIsAdmin,
 };
 
-function mapStateToProps({ games }) {
+function mapStateToProps({ games, auth }) {
     return {
         currentGame: games.currentGame,
         allGames: games.allGames,
+        isAdmin: auth.isAdmin,
+        user: auth.user,
     };
 }
 

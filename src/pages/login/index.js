@@ -6,7 +6,7 @@ import { Button } from 'semantic-ui-react';
 import { loginUser } from '../../functions/db';
 import { setUser } from '../../reducers/authReducer';
 
-const Login = ({ originalPage, user, setUser }) => {
+const Login = ({ user, setUser }) => {
     const [loading, setLoading] = React.useState(false);
 
     async function attemptLogin() {
@@ -30,7 +30,7 @@ const Login = ({ originalPage, user, setUser }) => {
                 <Button onClick={attemptLogin}>Login</Button>
             ) : (
                 <React.Fragment>
-                    <Link to={originalPage || '/'}>
+                    <Link to='/'>
                         <Button>Return to App!</Button>
                     </Link>
                 </React.Fragment>

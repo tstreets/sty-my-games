@@ -1,9 +1,14 @@
 const initialState = {
     user: null,
+    isAdmin: null,
 };
 
 export function setUser(user) {
     return { type: 'authSetUser', user };
+}
+
+export function setIsAdmin(isAdmin) {
+    return { type: 'authSetIsAdmin', isAdmin };
 }
 
 const authReducer = (state = initialState, action) => {
@@ -12,6 +17,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user: action.user,
+            };
+        case 'authSetIsAdmin':
+            return {
+                ...state,
+                isAdmin: action.isAdmin,
             };
         default:
             return state;

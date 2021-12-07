@@ -27,14 +27,14 @@ const GamePreview = ({
             id,
             {
                 id,
-                description: description_preview,
-                maxPlayers: max_players,
-                minPlayers: min_players,
-                maxPlaytime: max_playtime,
-                minPlaytime: min_playtime,
-                backupImage: image_url,
-                minAge: min_age,
-                year: year_published,
+                description: description_preview || '',
+                maxPlayers: max_players || 8,
+                minPlayers: min_players || 1,
+                maxPlaytime: max_playtime || 15,
+                minPlaytime: min_playtime || 5,
+                backupImage: image_url || '',
+                minAge: min_age || 3,
+                year: year_published || '',
             },
             mechanicsList
         );

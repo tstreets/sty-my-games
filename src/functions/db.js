@@ -7,6 +7,8 @@ import {
     addDoc,
     getDocs,
     getDoc,
+    query,
+    where,
 } from 'firebase/firestore';
 import {} from 'firebase/storage';
 
@@ -25,10 +27,11 @@ export async function loginUser() {
 const db = getFirestore(app);
 const appsCollection = 'test';
 const appName = 'my-games';
+const appRef = doc(db, appsCollection, appName);
 
 export async function addGame({ gameData = {}, user = {} }) {
     try {
-        const gamesRef = collection(doc(db, appsCollection, appName), 'games');
+        const gamesRef = collection(appRef, 'games');
         const newGameRef = await addDoc(gamesRef, {
             addedBy: user.email,
             dateAdded: Date.now(),
@@ -42,7 +45,7 @@ export async function addGame({ gameData = {}, user = {} }) {
 
 export async function getAllGames() {
     try {
-        const gamesRef = collection(doc(db, appsCollection, appName), 'games');
+        const gamesRef = collection(appRef, 'games');
         const allGamesRef = await getDocs(gamesRef);
         const allGames = [];
         for (let gameRef of allGamesRef.docs) {
@@ -60,8 +63,7 @@ export async function getAllGames() {
 
 export async function getGame(gameId) {
     try {
-        const myGamesRef = doc(db, appsCollection, appName);
-        const gameRef = await getDoc(doc(myGamesRef, 'games', gameId));
+        const gameRef = await getDoc(doc(appRef, 'games', gameId));
         if (!gameRef.id) return {};
         const gameData = gameRef.data();
         return {
@@ -70,5 +72,16 @@ export async function getGame(gameId) {
         };
     } catch {
         return {};
+    }
+}
+
+export async function checkAdmin(user) {
+    try {
+        const adminRef = collection(appRef, 'admin');
+        const adminQuery = query(adminRef, where('email', '==', user.email));
+        const adminSnap = await getDocs(adminQuery);
+        return !adminSnap.empty;
+    } catch {
+        return false;
     }
 }
