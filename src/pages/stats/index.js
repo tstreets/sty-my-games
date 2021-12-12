@@ -42,7 +42,7 @@ const Stats = ({ setAllGames, allGames }) => {
             const { length } = stats.mechanics.filter(me => me === m);
             return [...acc, { name: m, count: length }];
         }, [])
-        .sort((a, b) => (a.count > b.count ? 1 : -1));
+        .sort((a, b) => (a.count < b.count ? 1 : -1));
 
     return (
         <React.Fragment>
