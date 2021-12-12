@@ -30,8 +30,8 @@ const Home = ({ allGames, setAllGames }) => {
     }
 
     const sortedGames = allGames
-        ? allGames.sort((a, b) => {
-              return a.name > b.name ? 1 : -1;
+        ? allGames.sort(() => {
+              return Math.random() > 0.5 ? 1 : -1;
           })
         : [];
 
